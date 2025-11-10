@@ -5,7 +5,7 @@ import { useToast } from '@/components/ui/use-toast'
 import { verfiySchema } from '@/schemas/verifySchema'
 import { ApiResponse } from '@/types/ApiResponse'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Button } from '@react-email/components'
+import { Button } from '@/components/ui/button'
 import axios, { AxiosError } from 'axios'
 import { useParams, useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
@@ -22,10 +22,10 @@ function VerifyAccount() {
 
     const onSubmit = async (data: z.infer<typeof verfiySchema>) => {
         try {
-            const response = await axios.post(`/api/verify-code`, {
+            const response = await axios.post<ApiResponse>(`/api/verify-code`, {
                 username: params.username,
                 code: data.code
-            })
+            })  
 
             toast({
                 title: "Success",
