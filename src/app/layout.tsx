@@ -11,13 +11,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <AuthProvider>
         <body>
+      <AuthProvider>
           <Navbar />
           {children}
           <Toaster />
-        </body>
       </AuthProvider>
+        </body>
     </html>
 
   );
