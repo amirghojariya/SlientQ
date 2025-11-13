@@ -44,7 +44,7 @@ const home = () => {
         </Carousel>
       </main>
       <footer className="text-center p-4 md:p-6 bg-gray-900 text-white">
-        © 2025 Mystry Message. All rights reserved.
+        © 2025 SilentQ. All rights reserved.
       </footer>
     </>
   )
