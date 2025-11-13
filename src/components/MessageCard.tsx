@@ -2,7 +2,6 @@
 
 import {
     Card,
-    CardAction,
     CardContent,
     CardDescription,
     CardFooter,
@@ -21,6 +20,7 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
+
 import { Button } from "./ui/button"
 import { X } from "lucide-react"
 import { Message } from "@/model/User"
@@ -38,8 +38,7 @@ export function MessageCard({ message, onMessageDelete }: MessageCardProps) {
     const { toast } = useToast()
 
     const handleDeleteConfirm = async () => {
-        const response = await axios.delete<ApiResponse>(`/api/delete-message/${message._id}`)
-
+        const response = await axios.delete<ApiResponse>(`/api/delete-message/${message._id}`);
         toast({
             title: response.data.message,
         })
@@ -48,36 +47,39 @@ export function MessageCard({ message, onMessageDelete }: MessageCardProps) {
 
     return (
         <Card>
-            <CardHeader>
-                <CardTitle>Card Title</CardTitle>
+            <CardHeader className="flex justify-between items-start">
+                <div>
+                    <CardTitle className="text-lg font-semibold">
+                        {message.content}
+                    </CardTitle>
+                    <CardDescription>
+                        {new Date(message.createdAT).toLocaleString()}
+                    </CardDescription>
+                </div>
+
                 <AlertDialog>
                     <AlertDialogTrigger asChild>
-                        <Button variant="destructive"><X className="w-5 h-5" /></Button>
+                        <Button variant="destructive" size="icon">
+                            <X className="w-5 h-5" />
+                        </Button>
                     </AlertDialogTrigger>
                     <AlertDialogContent>
                         <AlertDialogHeader>
-                            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                            <AlertDialogTitle>Delete Message?</AlertDialogTitle>
                             <AlertDialogDescription>
-                                This action cannot be undone. This will permanently delete your
-                                account and remove your data from our servers.
+                                This action cannot be undone. The message will be permanently deleted.
                             </AlertDialogDescription>
                         </AlertDialogHeader>
                         <AlertDialogFooter>
                             <AlertDialogCancel>Cancel</AlertDialogCancel>
-                            <AlertDialogAction onClick={handleDeleteConfirm}>Continue</AlertDialogAction>
+                            <AlertDialogAction onClick={handleDeleteConfirm}>Delete</AlertDialogAction>
                         </AlertDialogFooter>
                     </AlertDialogContent>
                 </AlertDialog>
-                <CardDescription>Card Description</CardDescription>
-                <CardAction>Card Action</CardAction>
             </CardHeader>
-            <CardContent>
 
-            </CardContent>
-            <CardFooter>
-
-            </CardFooter>
+            <CardContent></CardContent>
+            <CardFooter></CardFooter>
         </Card>
     )
 }
-

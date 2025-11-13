@@ -26,7 +26,9 @@ export async function GET(request: Request) {
         const userId = new mongoose.Types.ObjectId(_user._id);
 
         // ✅ Fetch user directly
-        const user = await UserModel.findById(userId).lean();
+        const user = await UserModel.findById(userId)
+        .select("messages")
+        .lean();
 
         if (!user) {
             return Response.json(
@@ -42,7 +44,7 @@ export async function GET(request: Request) {
         return Response.json(
             {
                 success: true,
-                messages: [],
+                messages: user.messages,
             },
             { status: 200 }
         );

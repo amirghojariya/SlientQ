@@ -46,7 +46,7 @@ function UserDashboard() {
 
     try {
       const response = await axios.get<ApiResponse>('/api/accept-messages')
-      setValue('acceptMessages', response.data.isAcceptingMessage)
+      setValue('acceptMessages', response.data.isAcceptingMessages!)
 
     } catch (error) {
       const axiosError = error as AxiosError<ApiResponse>
@@ -96,12 +96,12 @@ function UserDashboard() {
 
   // handle switch change
 
-  const handleSwitchChange = async () => {
+  const handleSwitchChange = async (value: boolean) => {
     try {
       const response = await axios.post<ApiResponse>('/api/accept-messages', {
-        acceptMessages: !acceptMessages
+        acceptMessages: value
       })
-      setValue('acceptMessages', !acceptMessages)
+      setValue('acceptMessages', value)
       toast({
         title: response.data.message,
         variant: 'default'
@@ -155,8 +155,8 @@ function UserDashboard() {
       <div className="mb-4">
         <Switch
           {...register('acceptMessages')}
-          checked={acceptMessages ?? false}
-          onCheckedChange={handleSwitchChange}
+          checked={acceptMessages}
+          onCheckedChange={(val) => handleSwitchChange(val)}
           disabled={isSwitchLoading}
         />
         <span className="ml-2">

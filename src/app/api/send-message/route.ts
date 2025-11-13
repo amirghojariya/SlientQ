@@ -21,7 +21,7 @@ export async function POST(request: Request) {
 
         // is user accepting the messages
 
-        if (!user.isAcceptingMessage) {
+        if (!user.isAcceptingMessages) {
             return Response.json(
                 {
                     success: false,
@@ -32,7 +32,7 @@ export async function POST(request: Request) {
             )
         }
 
-        const newMessage = { content, createdAt: new Date() }
+        const newMessage = { content, createdAT: new Date() }
         user.messages.push(newMessage as unknown as Message)
         await user.save()
 
